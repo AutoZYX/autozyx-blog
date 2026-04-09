@@ -1,0 +1,27 @@
+{{- /* layer-stack: a responsive stacked layer diagram */ -}}
+{{ $layers := split .Inner "||" }}
+<div class="layer-stack">
+  {{ range $i, $layer := $layers }}
+    {{ $parts := split (strings.TrimSpace $layer) "|" }}
+    {{ if ge (len $parts) 2 }}
+    {{ $name := index $parts 0 | strings.TrimSpace }}
+    {{ $desc := index $parts 1 | strings.TrimSpace }}
+    <div class="ls-layer" style="--layer-i: {{ $i }}">
+      <div class="ls-name">{{ $name }}</div>
+      <div class="ls-desc">{{ $desc | markdownify }}</div>
+    </div>
+    {{ end }}
+  {{ end }}
+</div>
+<style>
+.layer-stack{max-width:680px;margin:2em auto;display:flex;flex-direction:column;gap:0;font-family:'Inter',system-ui,sans-serif}
+.ls-layer{padding:1em 1.5em;border:1px solid var(--border,#e0ded6);background:var(--card-bg,#fff);text-align:center;position:relative;transition:transform 0.2s}
+.ls-layer:first-child{border-radius:12px 12px 0 0;background:linear-gradient(135deg,#ebf5fb,#fef9f5);border-bottom:none}
+.ls-layer:last-child{border-radius:0 0 12px 12px;background:linear-gradient(135deg,#f0eeea,#faf9f5);border-top:none}
+.ls-layer:not(:first-child):not(:last-child){border-top:none;border-bottom:none}
+.ls-layer:hover{transform:scale(1.01);z-index:1;box-shadow:0 2px 12px rgba(0,0,0,0.08)}
+.ls-name{font-weight:700;font-size:1em;color:var(--accent,#c85a3a);margin-bottom:0.3em}
+.ls-desc{font-size:0.88em;color:var(--muted,#6b6960);line-height:1.5}
+.ls-layer+.ls-layer::before{content:"▲ 上层兜住下层的体验下限 ▼ 下层提供上层的能力上限";display:none}
+@media(max-width:480px){.ls-layer{padding:0.8em 1em}.ls-name{font-size:0.92em}.ls-desc{font-size:0.82em}}
+</style>

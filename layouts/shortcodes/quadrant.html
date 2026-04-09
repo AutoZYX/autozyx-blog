@@ -1,0 +1,32 @@
+{{- /* quadrant: 2x2 matrix diagram for SOTIF scenarios etc. */ -}}
+{{ $title := .Get "title" | default "" }}
+{{ $cells := split .Inner "||" }}
+<div class="quadrant-diagram">
+  {{ if $title }}<div class="qd-title">{{ $title }}</div>{{ end }}
+  <div class="qd-grid">
+    {{ range $i, $cell := $cells }}
+      {{ $parts := split (strings.TrimSpace $cell) "|" }}
+      {{ if ge (len $parts) 3 }}
+      <div class="qd-cell qd-cell-{{ $i }}">
+        <div class="qd-icon">{{ index $parts 0 | strings.TrimSpace }}</div>
+        <div class="qd-name">{{ index $parts 1 | strings.TrimSpace }}</div>
+        <div class="qd-desc">{{ index $parts 2 | strings.TrimSpace }}</div>
+      </div>
+      {{ end }}
+    {{ end }}
+  </div>
+</div>
+<style>
+.quadrant-diagram{max-width:640px;margin:2em auto;font-family:'Inter',system-ui,sans-serif}
+.qd-title{text-align:center;font-weight:700;font-size:1.05em;margin-bottom:1em;color:var(--text,#1a1a18)}
+.qd-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border,#e0ded6);border-radius:12px;overflow:hidden}
+.qd-cell{padding:1.2em;text-align:center;background:var(--card-bg,#fff)}
+.qd-cell-0{background:#eafaf1}
+.qd-cell-1{background:#fef5e7}
+.qd-cell-2{background:#ebf5fb}
+.qd-cell-3{background:#fdedec}
+.qd-icon{font-size:1.5em;margin-bottom:0.3em}
+.qd-name{font-weight:700;font-size:0.95em;margin-bottom:0.4em;color:var(--text,#1a1a18)}
+.qd-desc{font-size:0.82em;color:var(--muted,#6b6960);line-height:1.5}
+@media(max-width:480px){.qd-cell{padding:0.8em 0.6em}.qd-name{font-size:0.85em}.qd-desc{font-size:0.78em}}
+</style>

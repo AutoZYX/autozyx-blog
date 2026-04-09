@@ -1,0 +1,52 @@
+{{- /* ceiling-floor: visual diagram showing model ceiling vs harness floor */ -}}
+<div class="ceiling-floor-diagram">
+  <div class="cf-title">用户体验空间</div>
+  <div class="cf-zone cf-ceiling">
+    <span class="cf-line cf-line-dotted"></span>
+    <span class="cf-label">天花板 <small>（模型能力上限）</small></span>
+  </div>
+  <div class="cf-middle">
+    <div class="cf-arrow">▲</div>
+    <div class="cf-desc">
+      <strong>Harness 无法突破这条线</strong><br>
+      但可以让系统更频繁地接近这条线
+    </div>
+  </div>
+  <div class="cf-zone cf-floor">
+    <span class="cf-line cf-line-solid"></span>
+    <span class="cf-label">地板 <small>（Harness 兜住的体验下限）</small></span>
+  </div>
+  <div class="cf-middle cf-middle-danger">
+    <div class="cf-arrow-down">▲ ▼</div>
+    <div class="cf-desc">没有 Harness 时，体验可以跌到这里</div>
+  </div>
+  <div class="cf-zone cf-abyss">
+    <span class="cf-line cf-line-dotted"></span>
+    <span class="cf-label">深渊 <small>（无兜底时的最差体验）</small></span>
+  </div>
+  <div class="cf-summary">
+    Harness 的价值 = 天花板不变，把地板从<span class="cf-bad">"深渊"</span>抬到<span class="cf-good">"可接受"</span>
+  </div>
+</div>
+<style>
+.ceiling-floor-diagram{max-width:640px;margin:2em auto;background:var(--card-bg,#fff);border:1px solid var(--border,#e0ded6);border-radius:12px;padding:2em 1.5em;font-family:'Inter',system-ui,sans-serif;text-align:center}
+.cf-title{font-size:0.85em;color:var(--muted,#6b6960);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.5em}
+.cf-zone{position:relative;padding:0.6em 0;margin:0.3em 0}
+.cf-line{display:block;height:3px;border-radius:2px;margin-bottom:0.4em}
+.cf-line-dotted{background:repeating-linear-gradient(90deg,#c85a3a 0,#c85a3a 8px,transparent 8px,transparent 14px)}
+.cf-line-solid{background:linear-gradient(90deg,#2ecc71,#27ae60);height:4px}
+.cf-label{font-weight:600;font-size:1em;color:var(--text,#1a1a18)}
+.cf-label small{font-weight:400;color:var(--muted,#6b6960);font-size:0.85em}
+.cf-ceiling .cf-label{color:#c85a3a}
+.cf-floor .cf-label{color:#27ae60}
+.cf-abyss .cf-label{color:#95a5a6}
+.cf-middle{padding:0.8em 1.5em;margin:0.5em auto;max-width:460px;text-align:left;border-left:3px solid #3498db;background:rgba(52,152,219,0.05);border-radius:0 8px 8px 0}
+.cf-middle-danger{border-left-color:#e74c3c;background:rgba(231,76,60,0.05)}
+.cf-arrow,.cf-arrow-down{font-size:0.9em;color:#3498db;margin-bottom:0.2em}
+.cf-middle-danger .cf-arrow-down{color:#e74c3c}
+.cf-desc{font-size:0.92em;line-height:1.6;color:var(--text,#1a1a18)}
+.cf-summary{margin-top:1.5em;padding:1em;background:var(--badge-bg,#f0eeea);border-radius:8px;font-size:0.95em;font-weight:500;line-height:1.6}
+.cf-bad{color:#e74c3c;font-weight:700}
+.cf-good{color:#27ae60;font-weight:700}
+@media(max-width:480px){.ceiling-floor-diagram{padding:1.2em 1em}.cf-middle{padding:0.6em 1em}.cf-label{font-size:0.9em}.cf-desc{font-size:0.85em}}
+</style>
