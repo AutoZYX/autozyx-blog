@@ -1,0 +1,90 @@
+baseURL = "https://blog.autozyx.com/"
+languageCode = "zh-CN"
+title = "AutoZYX Blog"
+theme = "PaperMod"
+paginate = 10
+enableEmoji = true
+enableRobotsTXT = true
+
+[params]
+  env = "production"
+  author = "张玉新 Yuxin Zhang"
+  description = "智能驾驶安全 · SOTIF · 功能安全 · AI工程 | AD Safety · SOTIF · Functional Safety · AI Engineering"
+  keywords = ["SOTIF", "ISO 21448", "ISO 26262", "功能安全", "自动驾驶", "Harness Engineering", "智能驾驶"]
+  defaultTheme = "light"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowToc = true
+  TocOpen = true
+  comments = false
+
+  [params.homeInfoParams]
+    Title = "AutoZYX Blog"
+    Content = "智能驾驶安全 · SOTIF · 功能安全 · AI工程方法论"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/zhangyuxin/"
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/AutoZYX"
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:yuxinzhang@jlu.edu.cn"
+
+  [params.label]
+    text = "AutoZYX Blog"
+
+  [params.assets]
+    favicon = "/favicon.png"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    style = "dracula"
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[[menu.main]]
+  identifier = "posts"
+  name = "文章"
+  url = "/posts/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "categories"
+  name = "分类"
+  url = "/categories/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "tags"
+  name = "标签"
+  url = "/tags/"
+  weight = 30
+
+[[menu.main]]
+  identifier = "series"
+  name = "系列"
+  url = "/series/"
+  weight = 40
+
+[[menu.main]]
+  identifier = "home"
+  name = "主站"
+  url = "https://autozyx.com"
+  weight = 50
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"

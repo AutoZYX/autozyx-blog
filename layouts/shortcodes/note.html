@@ -1,0 +1,31 @@
+{{- /* note shortcode: callout box with type info/warning/tip */ -}}
+{{ $type := .Get "type" | default "info" }}
+
+{{ $borderColor := "#3498db" }}
+{{ $bgColor := "#ebf5fb" }}
+{{ $icon := "&#9432;" }}
+{{ $iconColor := "#2980b9" }}
+{{ $label := "Note" }}
+
+{{ if eq $type "warning" }}
+  {{ $borderColor = "#e67e22" }}
+  {{ $bgColor = "#fef5e7" }}
+  {{ $icon = "&#9888;" }}
+  {{ $iconColor = "#d35400" }}
+  {{ $label = "Warning" }}
+{{ else if eq $type "tip" }}
+  {{ $borderColor = "#27ae60" }}
+  {{ $bgColor = "#eafaf1" }}
+  {{ $icon = "&#128161;" }}
+  {{ $iconColor = "#1e8449" }}
+  {{ $label = "Tip" }}
+{{ end }}
+
+<div class="shortcode-note shortcode-note--{{ $type }}" style="border-left: 4px solid {{ $borderColor }}; background-color: {{ $bgColor }}; border-radius: 0 6px 6px 0; padding: 1em 1.2em; margin: 1.5em 0; line-height: 1.7;">
+  <div class="shortcode-note-header" style="font-weight: 700; color: {{ $iconColor }}; margin-bottom: 0.4em; font-size: 0.95em;">
+    <span style="margin-right: 0.4em;">{{ $icon | safeHTML }}</span>{{ $label }}
+  </div>
+  <div class="shortcode-note-body" style="color: #2c3e50;">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

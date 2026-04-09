@@ -1,0 +1,17 @@
+{{- /* stat-row shortcode: responsive row of statistic cards */ -}}
+{{ $cards := split .Inner "||" }}
+<div class="shortcode-stat-row" style="display: flex; flex-wrap: wrap; gap: 1em; margin: 1.5em 0; justify-content: center;">
+  {{ range $cards }}
+    {{ $parts := split (strings.TrimSpace .) "|" }}
+    {{ if ge (len $parts) 2 }}
+    <div class="shortcode-stat-card" style="flex: 1 1 180px; max-width: 260px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; padding: 1.5em 1.2em; text-align: center; border: 1px solid #dee2e6;">
+      <div class="shortcode-stat-number" style="font-size: 2em; font-weight: 800; color: #0d2b52; line-height: 1.2; margin-bottom: 0.3em;">
+        {{ index $parts 0 | strings.TrimSpace }}
+      </div>
+      <div class="shortcode-stat-label" style="font-size: 0.9em; color: #6c757d; font-weight: 500;">
+        {{ index $parts 1 | strings.TrimSpace }}
+      </div>
+    </div>
+    {{ end }}
+  {{ end }}
+</div>

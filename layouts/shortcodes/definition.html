@@ -1,0 +1,9 @@
+{{- /* definition shortcode: dark blue box with gold title */ -}}
+<div class="shortcode-definition" style="background-color: #0d2b52; border-radius: 8px; padding: 0; margin: 1.5em 0; overflow: hidden; color: #fff;">
+  <div class="shortcode-definition-title" style="background-color: rgba(0,0,0,0.2); padding: 0.6em 1.2em; font-weight: 700; font-size: 1.05em; color: #f6c55a; border-bottom: 2px solid #f6c55a;">
+    {{ .Get "title" }}
+  </div>
+  <div class="shortcode-definition-body" style="padding: 1em 1.2em; line-height: 1.7;">
+    {{ .Inner | markdownify }}
+  </div>
+</div>
