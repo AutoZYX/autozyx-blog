@@ -2,101 +2,11 @@
 <svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
 <svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button><ul class=lang-switch><li>|</li><li><a href=https://blog.autozyx.com/en/ title=English aria-label=English>English</a></li></ul></div></div><ul id=menu><li><a href=https://blog.autozyx.com/posts/ title=文章><span>文章</span></a></li><li><a href=https://blog.autozyx.com/categories/ title=分类><span>分类</span></a></li><li><a href=https://blog.autozyx.com/tags/ title=标签><span>标签</span></a></li><li><a href=https://blog.autozyx.com/series/ title=系列><span>系列</span></a></li><li><a href=https://autozyx.com title=主站><span>主站</span>&nbsp;
 <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><header class=page-header><div class=breadcrumbs><a href=https://blog.autozyx.com/>主页</a>&nbsp;»&nbsp;<a href=https://blog.autozyx.com/tags/>Tags</a></div><h1>SOTIF</h1></header><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>博世工程师开源了一个项目，可能改变每个汽车工程师的工作方式</h2></header><div class=entry-content><p>摘要：博世工程师Thejeswarareddy R开源了一套将汽车工程标准知识系统性注入Claude Code的智能体项目，覆盖75+技能类别。我Fork后补充了自动驾驶安全标准（ISO 21448/34502/4804等）、中国即将实施的强制性国标、以及SOTIF深度实践内容。本文解读这个项目的架构亮点，以及我的补充思路。
-图 1 如果你是一个初级的汽车功能安全工程师，你一定有过这样的经历：
-早上9点，项目经理发来消息：“这个ADAS功能需要做ASIL分解，下午客户评审前需要给我更新的HARA表格。”
-于是你开始翻ISO 26262 Part 3。翻了半小时找到ASIL确定规则，又花20分钟回忆严重度S、暴露率E、可控性C的定义。然后打开Excel模板，逐行填写。填到一半，某个失效模式的ASIL等级拿不准，又翻回标准。等HARA初稿完成——三个小时过去了。
-而这还只是一个标准的一个环节。
-你同时还要查AUTOSAR的命名规范、MISRA的合规规则、ISO 21434的TARA分析模板、ASPICE的工作产品清单……
-这些工作不难，但极其耗时。据统计，一个初级的功能安全工程师每周大概有10-15个小时花在”翻标准、对条款、填模板”上。
-我一直觉得这件事应该有更好的解决方式，但从来没有真正动手去做。直到上周，我看到了一个博世工程师做的事情。
-这位博世工程师做了什么 Thejeswarareddy R，博世的一位Lead Engineer，做了一件让我佩服的事：
-他把汽车软件工程中最常用的标准和工程知识，系统性地”注入”到了AI助手Claude Code中，做成了一个完整的开源智能体系统。
-图 2 这不是“把几篇标准摘要丢给ChatGPT”那种问答式玩法。他做的是一套经过精心架构设计的工程化系统：
-图 3 我来翻译一下这意味着什么。
-以前你要做ASIL分解，需要自己翻标准、建模板、填表格。现在你可以直接说：
-“帮我对这个L3级别的HWP的紧急制动功能做HARA分析，输出ASIL等级”
-AI会根据注入的ISO 26262知识，按标准流程输出一份结构化的HARA表格。你要做的是审核和判断——而不是把时间花在查找和格式化上。
-这个项目有几点让我特别欣赏：
-**第一，架构设计很讲究。**它用了一种”追加式”安装方式——你现有的开发环境一个字符都不会被修改，所有新增内容都带automotive-前缀避免冲突。这说明作者是真正做工程的人，知道不能动别人的工作环境。
-**第二，规模感令人敬畏。**75+个技能类别意味着他梳理了ADAS、BMS、V2X、动力总成、诊断、OTA、数字孪生、Zonal架构等十几个汽车细分领域的知识体系。这不是一两天能做出来的事情。
-**第三，完全开源。**MIT协议，你可以自由使用、修改，甚至用在商业项目中。
-我做了一些小小的补充 说了这么多好话，说一个”但是”。
-这个项目的覆盖重心是传统汽车软件工程——ISO 26262功能安全、AUTOSAR架构、MISRA编码规范、ASPICE过程管理——这些做得很扎实。
-但有两个方向，由于作者的工作背景和地域，覆盖比较薄：
-**一是自动驾驶安全领域的专项标准。**近两三年密集发布了一批重要的ADAS/AD安全标准，原项目基本没有涉及。
-**二是中国标准法规体系。**中国正在加速建立自己的智能网联汽车标准，包括两个即将实施的强制性国标，原项目里完全没有。
-这两个方向恰好是我日常工作的领域，所以我Fork了这个项目，做了一些补充。以下是我补充的主要内容：
-图 4 补充一：自动驾驶安全标准 这几年，自动驾驶安全评估从”没有标准可依”快速进入了”标准框架基本成型”的阶段。以下几项标准构成了当前AD安全评估的核心框架：
-图 5 这几项标准，在我的Fork中都以结构化的技能文件形式集成了——不是放一份摘要，而是提取了核心框架、关键概念和工程实施要点。
-补充二：中国标准法规 对在国内做L2/L3产品的工程师来说，有两份即将实施的强制性国标是绕不开的：
-第一个是L2组合驾驶辅助系统安全要求（GB强标）。
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>104 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 博世工程师开源了一个项目，可能改变每个汽车工程师的工作方式" href=https://blog.autozyx.com/posts/bosch-engineer-opensource-project/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>驾驭工程（Harness Engineering）在智能驾驶领域的跨界应用</h2></header><div class=entry-content><p>摘要：2026 年初，Harness Engineering（驾驭工程）在 AI 工程社区迅速崛起，成为继 Prompt Engineering、Context Engineering 之后的第三代方法论范式。本文从驾驭工程的核心概念出发，系统分析其与当前基于端到端算法的智能驾驶系统在全生命周期各阶段的深层对应关系，揭示两者在控制论框架、改进循环、失败应对哲学上的结构性同构，并详细阐述其对智能驾驶用户体验与安全工程（尤其是 SOTIF / ISO 21448）的参考价值。研究发现：驾驭工程与汽车安全工程并非表面相似的类比，而是面对同一类根问题的两套独立演化解法，共享同一套底层操作系统。
-一、驾驭工程：第三代 AI 工程范式的崛起 1.1 概念与起源 Harness Engineering（驾驭工程） 是围绕 AI 智能体设计和构建约束机制、反馈回路、工作流控制与持续改进循环的系统工程实践。它不优化模型本身，而是优化模型运行的整个"环境"。
-“Harness"一词来自马具——缰绳、马鞍、嚼子——一套引导强大但不可完全预测的动物的完整装备。驾驭工程不是去削弱 AI 的能力，而是为它打造一套完整的约束与引导系统，让它跑得又快又稳。
-这个概念由 HashiCorp 联合创始人 Mitchell Hashimoto 在 2026 年 2 月 5 日首次提出。六天后，OpenAI 在其百万行代码实验报告中正式采用这一术语。随后 Martin Fowler 团队撰文深度分析，Anthropic 发布长时运行 Agent 最佳实践，一个月内"Harness Engineering"成为全球开发者社区的高频词。
-Mitchell Hashimoto 的原始定义：
-“Harness engineering is the idea that anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent will not make that mistake again in the future.”
-...</p></div><footer class=entry-footer><span title='2026-04-09 00:00:00 +0000 UTC'>2026年4月9日</span>&nbsp;·&nbsp;<span>6 分钟</span>&nbsp;·&nbsp;<span>1237 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 驾驭工程（Harness Engineering）在智能驾驶领域的跨界应用" href=https://blog.autozyx.com/posts/harness-engineering-intelligent-driving/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？</h2></header><div class=entry-content><p>摘要：2026年3月，德国VDA发布了全球汽车行业首个AI质量管理标准化指南——VDA 20《AI in Quality Management》（191页）。本文深度解读其AIQM三级风险分级、80项检查表和12个应用案例，分析对中国自动驾驶行业的参考价值，并探讨中国在端到端评估方法论和数据基础设施上的领先优势与机会窗口。
-图 1 文末附全文下载链接
-章节导读 一、文档背景——VDA AI in QM 是什么？为什么全球汽车行业需要关注？
-二、核心框架——风险分级、80项检查表、应用案例、AI安全标准全景图
-三、对中国自动驾驶的参考价值——填补AI质量管理空白、变更管理分类
-四、中国落地的额外考量——法规差异、组织文化差异、数据生态差异
-五、挑战与优化——自身局限 + 端到端可解释性、数据漂移、供应链协调
-六、中国的领先优势——AI应用速度领先、端到端评估、数据基础设施
-七、关键启示——对OEM/Tier1、标准制定者、研究者分别的行动建议
-八、一句话总结——谁先给路上跑的AI立规矩，谁就定义下一个十年
-一、文档背景 2026年3月，德国汽车工业协会（VDA）发布了VDA 20——《AI in Quality Management》（以下简称"黄皮书"），这是全球汽车行业首个针对AI质量管理的系统性标准化指南，共191页。
-为什么值得关注？
-德国VDA标准在全球汽车行业的影响力不亚于ISO标准——VDA 6.3（过程审核）、VDA 6.5（产品审核）是几乎所有进入德国市场的汽车供应商的必修课。VDA 20的发布，意味着AI在汽车质量管理中的使用不再是"可选项"，而是开始有了规范化的框架和评估方法。
-图 2 黄皮书章节框架
-二、黄皮书的核心框架 2.1 AIQM三级风险分级——给AI系统"定安全等级" 黄皮书最核心的贡献是提出了AIQM（AI in Quality Management）三级风险分类方法，基于七个风险维度对AI系统进行评估。
-七个风险维度：
-分级结果：
-AIQM-3（最高要求）：七个维度中任一达到"高"即触发→所有评估项必须满足
-AIQM-2（中等要求）：部分评估项适用
-AIQM-1（基础要求）：少量评估项适用
-一个关键洞察：只要AI系统涉及功能安全ASIL C/D或预期功能安全 type 3/4，就自动触发AIQM-3。这意味着，当前所有用于L2+辅助驾驶和L3级及以上自动驾驶的AI组件，其质量管理必须达到最高等级。
-2.2 八阶段评估检查表——约80个"灵魂拷问" 通过AIQM风险分级后，第二步是对AI系统进行详细的技术评估。VDA按照AI系统的开发生命周期，定义了八个阶段：
-应用领域定义 → 数据理解 → 数据收集 → 数据准备 → 建模 → 评估 → 部署 → 运行维护
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>228 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？" href=https://blog.autozyx.com/posts/vda-ai-in-qm-germany-rules/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>端到端时代，基于场景的自动驾驶安全评价还有效吗？</h2></header><div class=entry-content><p>摘要：端到端架构正从论文走向量产，但全球自动驾驶安全评价体系的基石——基于场景的开发与测试方法——仍建立在"感知-规划-控制"三模块可分解的假设之上。本文系统分析场景方法在端到端时代面临的五个结构性挑战，论证其仍然有效但不再充分，并提出以大规模航测自然驾驶数据补充场景方法、构建三层方法协同框架的演进路径。
-图 1 引子：一个正在发生的范式冲突 2024年，自动驾驶行业发生了一个不太被安全工程师关注、但可能深刻改变他们工作方式的变化：
-端到端架构开始从论文走向量产。
-特斯拉FSD V12全面转向端到端神经网络。华为、理想、小鹏、蔚来相继发布或预告了各自的端到端方案。学术界，UniAD拿下CVPR 2023最佳论文，DriveTransformer登上ICLR 2025，DiffusionDrive成为CVPR 2025 Highlight。
-但与此同时，全球自动驾驶安全评价体系的基石——基于场景的开发与测试方法——仍然建立在一个核心假设之上：自动驾驶系统可以被分解为感知、规划、控制三个模块，分别识别各模块的干扰因素，进而构建测试场景。
-当端到端把这三个模块融为一体，这套方法还能用吗？
-这不是一个学术问题。这是每一个正在做L2+/L3产品的SOTIF工程师、测试工程师和安全架构师，今天就需要面对的实际问题。
-图1 文章全景导航图
-图 2 一、先理解场景方法的技术内核 在讨论"还有效吗"之前，必须先理解基于场景的方法到底在做什么。很多人对它的理解停留在"就是列一堆测试场景"的层面，这远远不够。
-1.1 ISO 34502：场景的三层抽象 ISO 34502:2022是当前基于场景的安全评价领域最重要的国际标准，由日本SAKURA项目主席Satoshi Taniguchi（丰田）主导制定。它定义了一个三层场景抽象模型：
-这个三层模型的价值在于：它把"无穷多的驾驶情况"转化为"有限且可管理的场景空间" 。功能场景用于专家讨论，逻辑场景用于参数化测试设计，具体场景用于可复现的仿真测试。
-图2 ISO 34502 三层场景抽象模型
-图 3 1.2 SAKURA从物理原理推导场景 上一篇文章详细介绍了SAKURA框架。这里聚焦它最核心的方法论——物理原理方法（Physical Principles Approach）。
-SAKURA把动态驾驶任务（DDT）分解为三个过程，然后针对每个过程，基于物理原理系统性地识别干扰因素：
-感知过程 → 传感器物理干扰 ├── 摄像头：可见光特性 → 强光、反光、低光照 ├── 毫米波雷达：电磁波特性 → 多径反射、相互干扰 └── LiDAR：红外光特性 → 雨雪吸收、灰尘散射
-规划过程 → 交通干扰 ├── 道路几何 × 自车行为 × 周围车辆行为 └── 24个高速场景 + 58个车辆交通模式 + 8个VRU模式
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>397 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 端到端时代，基于场景的自动驾驶安全评价还有效吗？" href=https://blog.autozyx.com/posts/e2e-scenario-based-safety-evaluation/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>日本SAKURA自动驾驶安全评价框架V4.0价值与挑战</h2></header><div class=entry-content><p>摘要：2026年3月，JAMA发布了SAKURA自动驾驶安全评价框架第四版（Ver.4.0），一份344页的国家级安全评价技术文档。本文从公司价值、工程师视角、核心方法论到端到端AI时代的前沿挑战，系统解读这份由丰田、本田、日产等日本主流车企联合打造的安全评价体系，并探讨其对中国标准工作的启示。
-图 1 2026年3月，SAKURA项目正式结题，日本汽车工业协会（JAMA）发布了SAKURA自动驾驶安全评价框架的第四版——一份长达344页的技术文档。
-这不是某个车企的内部报告，而是丰田、本田、日产、马自达、斯巴鲁、铃木、日野、三菱等几乎全部日本主流车企，加上博世日本、大陆日本等Tier 1，在日本经济产业省（METI）主导下，联合打造的国家级安全评价体系。
-SAKURA项目主席Satoshi Taniguchi来自丰田，同时也是ISO 34502的项目负责人。该项目也与我们熟知的德国PEGASUS系列项目有密切联动和协作，并支持了第一个L3法规UNECE R157，换句话说，这份文档的方法论直接塑造了国际标准。
-图 2 它为什么值得我们花时间读？读完又能用在哪里？
-本文将从公司价值、工程师价值、核心方法论，一直到端到端AI时代的前沿挑战，做一个系统的解读。
-一、先搞清楚：SAKURA到底在做什么 SAKURA的全称是Safety Assurance for automated driving using Knowledge-based Universal Risk Assessment。名字很长，核心思路却很简洁：
-用物理原理，系统性地穷举自动驾驶需要面对的所有安全场景。
-图 3 具体怎么做？框架把动态驾驶任务（DDT）拆解为感知→决策→操作三个过程，然后针对每个过程，基于物理原理识别可能的干扰因素：
-感知干扰传感器物理机制决定的——雷达的电磁波特性、LiDAR的红外光特性、摄像头的可见光特性，分别会在什么条件下"看不清"
-交通干扰道路几何×自车行为×周围车辆行为的系统组合——什么样的交通态势会构成威胁
-车辆动力学干扰作用于车辆的物理力——路面状态、风力、轮胎性能如何影响控制
-这套方法的精髓在于：不是从事故数据中倒推场景（数据驱动），而是从物理第一性原理正向推导场景（原理驱动）。好处是可以论证场景集合的完备性——你能说清楚为什么这些场景"够了"。
-在此基础上，框架还建立了一个四象限模型：按"合理可预见性"和"可预防性"两个维度划分所有场景。核心评价对象是象限A——可预见且可预防的场景，自动驾驶系统在这些场景中不能出事故。
-图 4 Ver.4.0相比之前的版本，最大的更新是在之前主要面向结构化道路的基础上，全面纳入了城市行车场景和弱势交通参与者VRU（行人和骑行者），并扩展了一般道路的遮挡场景考量。
-图 5 二、这份文档对谁有用？ 整车企业（OEM） 安全论证结构。文档展示了一套完整的、与ISO 21448对齐的安全保障流程——从ODD定义到安全评估的闭环。OEM安全部门可以直接参照搭建自己的安全论证体系。
-场景矩阵。框架通过系统组合构建了58类交通干扰场景，为测试场景库建设提供了结构化起点。不用再从零开始拍脑袋。
-C&amp;C Driver模型。这是文档技术含量最高的部分之一——将人类驾驶员的碰撞规避行为量化为具体参数：感知延迟0.75秒、最大减速度0.774G。这些数字直接定义了安全判据的基准线。
-自动驾驶科技公司 合规出海的核心参考。Annex G直接对应UN R-157法规的仿真验证要求。如果你的AD系统要出海，这一章是必读。
-Pass/Fail的量化依据。文档给出了Cut-in、Cut-out、Deceleration三类典型场景的可预防性边界——绿色区域表示系统应当能避免碰撞。这是算法测试判据的直接来源。
-传感器供应商 Annex E大约100页，是全球最系统的传感器物理原理干扰场景建模文档之一。毫米波雷达5类干扰、LiDAR 3类干扰、摄像头3类干扰，每类都从物理原理出发建立了完整的干扰模型。传感器团队的必读材料。
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>338 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 日本SAKURA自动驾驶安全评价框架V4.0价值与挑战" href=https://blog.autozyx.com/posts/japan-sakura-ad-safety-v4/></a></article></main><footer class=footer><span>&copy; 2026 <a href=https://blog.autozyx.com/>AutoZYX Blog</a></span> ·
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>6 分钟</span>&nbsp;·&nbsp;<span>2905 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 博世工程师开源了一个项目，可能改变每个汽车工程师的工作方式" href=https://blog.autozyx.com/posts/bosch-engineer-opensource-project/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>驾驭工程（Harness Engineering）在智能驾驶领域的跨界应用</h2></header><div class=entry-content><p>摘要：2026 年初，Harness Engineering（驾驭工程）在 AI 工程社区迅速崛起，成为继 Prompt Engineering、Context Engineering 之后的第三代方法论范式。本文从驾驭工程的核心概念出发，系统分析其与当前基于端到端算法的智能驾驶系统在全生命周期各阶段的深层对应关系，揭示两者在控制论框架、改进循环、失败应对哲学上的结构性同构，并详细阐述其对智能驾驶用户体验与安全工程（尤其是 SOTIF / ISO 21448）的参考价值。研究发现：驾驭工程与汽车安全工程并非表面相似的类比，而是面对同一类根问题的两套独立演化解法，共享同一套底层操作系统。
+...</p></div><footer class=entry-footer><span title='2026-04-09 00:00:00 +0000 UTC'>2026年4月9日</span>&nbsp;·&nbsp;<span>22 分钟</span>&nbsp;·&nbsp;<span>11000 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 驾驭工程（Harness Engineering）在智能驾驶领域的跨界应用" href=https://blog.autozyx.com/posts/harness-engineering-intelligent-driving/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？</h2></header><div class=entry-content><p>摘要：2026年3月，德国VDA发布了全球汽车行业首个AI质量管理标准化指南——VDA 20《AI in Quality Management》（191页）。本文深度解读其AIQM三级风险分级、80项检查表和12个应用案例，分析对中国自动驾驶行业的参考价值，并探讨中国在端到端评估方法论和数据基础设施上的领先优势与机会窗口。
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>11 分钟</span>&nbsp;·&nbsp;<span>5248 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？" href=https://blog.autozyx.com/posts/vda-ai-in-qm-germany-rules/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>端到端时代，基于场景的自动驾驶安全评价还有效吗？</h2></header><div class=entry-content><p>摘要：端到端架构正从论文走向量产，但全球自动驾驶安全评价体系的基石——基于场景的开发与测试方法——仍建立在"感知-规划-控制"三模块可分解的假设之上。本文系统分析场景方法在端到端时代面临的五个结构性挑战，论证其仍然有效但不再充分，并提出以大规模航测自然驾驶数据补充场景方法、构建三层方法协同框架的演进路径。
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>13 分钟</span>&nbsp;·&nbsp;<span>6080 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 端到端时代，基于场景的自动驾驶安全评价还有效吗？" href=https://blog.autozyx.com/posts/e2e-scenario-based-safety-evaluation/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>日本SAKURA自动驾驶安全评价框架V4.0价值与挑战</h2></header><div class=entry-content><p>摘要：2026年3月，JAMA发布了SAKURA自动驾驶安全评价框架第四版（Ver.4.0），一份344页的国家级安全评价技术文档。本文从公司价值、工程师视角、核心方法论到端到端AI时代的前沿挑战，系统解读这份由丰田、本田、日产等日本主流车企联合打造的安全评价体系，并探讨其对中国标准工作的启示。
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>10 分钟</span>&nbsp;·&nbsp;<span>4869 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 日本SAKURA自动驾驶安全评价框架V4.0价值与挑战" href=https://blog.autozyx.com/posts/japan-sakura-ad-safety-v4/></a></article></main><footer class=footer><span>&copy; 2026 <a href=https://blog.autozyx.com/>AutoZYX Blog</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
 <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>

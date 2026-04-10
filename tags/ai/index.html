@@ -2,85 +2,9 @@
 <svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
 <svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button><ul class=lang-switch><li>|</li><li><a href=https://blog.autozyx.com/en/ title=English aria-label=English>English</a></li></ul></div></div><ul id=menu><li><a href=https://blog.autozyx.com/posts/ title=文章><span>文章</span></a></li><li><a href=https://blog.autozyx.com/categories/ title=分类><span>分类</span></a></li><li><a href=https://blog.autozyx.com/tags/ title=标签><span>标签</span></a></li><li><a href=https://blog.autozyx.com/series/ title=系列><span>系列</span></a></li><li><a href=https://autozyx.com title=主站><span>主站</span>&nbsp;
 <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><header class=page-header><div class=breadcrumbs><a href=https://blog.autozyx.com/>主页</a>&nbsp;»&nbsp;<a href=https://blog.autozyx.com/tags/>Tags</a></div><h1>AI</h1></header><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>博世工程师开源了一个项目，可能改变每个汽车工程师的工作方式</h2></header><div class=entry-content><p>摘要：博世工程师Thejeswarareddy R开源了一套将汽车工程标准知识系统性注入Claude Code的智能体项目，覆盖75+技能类别。我Fork后补充了自动驾驶安全标准（ISO 21448/34502/4804等）、中国即将实施的强制性国标、以及SOTIF深度实践内容。本文解读这个项目的架构亮点，以及我的补充思路。
-图 1 如果你是一个初级的汽车功能安全工程师，你一定有过这样的经历：
-早上9点，项目经理发来消息：“这个ADAS功能需要做ASIL分解，下午客户评审前需要给我更新的HARA表格。”
-于是你开始翻ISO 26262 Part 3。翻了半小时找到ASIL确定规则，又花20分钟回忆严重度S、暴露率E、可控性C的定义。然后打开Excel模板，逐行填写。填到一半，某个失效模式的ASIL等级拿不准，又翻回标准。等HARA初稿完成——三个小时过去了。
-而这还只是一个标准的一个环节。
-你同时还要查AUTOSAR的命名规范、MISRA的合规规则、ISO 21434的TARA分析模板、ASPICE的工作产品清单……
-这些工作不难，但极其耗时。据统计，一个初级的功能安全工程师每周大概有10-15个小时花在”翻标准、对条款、填模板”上。
-我一直觉得这件事应该有更好的解决方式，但从来没有真正动手去做。直到上周，我看到了一个博世工程师做的事情。
-这位博世工程师做了什么 Thejeswarareddy R，博世的一位Lead Engineer，做了一件让我佩服的事：
-他把汽车软件工程中最常用的标准和工程知识，系统性地”注入”到了AI助手Claude Code中，做成了一个完整的开源智能体系统。
-图 2 这不是“把几篇标准摘要丢给ChatGPT”那种问答式玩法。他做的是一套经过精心架构设计的工程化系统：
-图 3 我来翻译一下这意味着什么。
-以前你要做ASIL分解，需要自己翻标准、建模板、填表格。现在你可以直接说：
-“帮我对这个L3级别的HWP的紧急制动功能做HARA分析，输出ASIL等级”
-AI会根据注入的ISO 26262知识，按标准流程输出一份结构化的HARA表格。你要做的是审核和判断——而不是把时间花在查找和格式化上。
-这个项目有几点让我特别欣赏：
-**第一，架构设计很讲究。**它用了一种”追加式”安装方式——你现有的开发环境一个字符都不会被修改，所有新增内容都带automotive-前缀避免冲突。这说明作者是真正做工程的人，知道不能动别人的工作环境。
-**第二，规模感令人敬畏。**75+个技能类别意味着他梳理了ADAS、BMS、V2X、动力总成、诊断、OTA、数字孪生、Zonal架构等十几个汽车细分领域的知识体系。这不是一两天能做出来的事情。
-**第三，完全开源。**MIT协议，你可以自由使用、修改，甚至用在商业项目中。
-我做了一些小小的补充 说了这么多好话，说一个”但是”。
-这个项目的覆盖重心是传统汽车软件工程——ISO 26262功能安全、AUTOSAR架构、MISRA编码规范、ASPICE过程管理——这些做得很扎实。
-但有两个方向，由于作者的工作背景和地域，覆盖比较薄：
-**一是自动驾驶安全领域的专项标准。**近两三年密集发布了一批重要的ADAS/AD安全标准，原项目基本没有涉及。
-**二是中国标准法规体系。**中国正在加速建立自己的智能网联汽车标准，包括两个即将实施的强制性国标，原项目里完全没有。
-这两个方向恰好是我日常工作的领域，所以我Fork了这个项目，做了一些补充。以下是我补充的主要内容：
-图 4 补充一：自动驾驶安全标准 这几年，自动驾驶安全评估从”没有标准可依”快速进入了”标准框架基本成型”的阶段。以下几项标准构成了当前AD安全评估的核心框架：
-图 5 这几项标准，在我的Fork中都以结构化的技能文件形式集成了——不是放一份摘要，而是提取了核心框架、关键概念和工程实施要点。
-补充二：中国标准法规 对在国内做L2/L3产品的工程师来说，有两份即将实施的强制性国标是绕不开的：
-第一个是L2组合驾驶辅助系统安全要求（GB强标）。
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>104 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 博世工程师开源了一个项目，可能改变每个汽车工程师的工作方式" href=https://blog.autozyx.com/posts/bosch-engineer-opensource-project/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>15万围观，50人动手：AI工具落地的错位</h2></header><div class=entry-content><p>摘要：一篇关于博世工程师开源项目的文章收获15万+曝光，但真正Fork动手的只有50多人。这种"围观多、动手少"的现象背后，是AI工具落地的结构性错位——真正需要AI工具的人不会用GitHub，会用GitHub的人不需要通用工具。AI工具的上限取决于注入者的领域深度，而非AI本身的能力。
-这篇文章发出后，评论区出现了这样一条留言：
-图 1 “车企一线大头兵，现在真的压力山大，看到这种项目出来真是五味杂陈，被时代浪潮卷死应该快要进入倒计时了…”
-那篇文章在公众号和LinkedIn两个平台加起来，超过15万人看了——公众号近3万阅读、2000多次转发，LinkedIn近13万曝光、1400多个赞。
-然而，打开GitHub一看——真正Fork下来用的人，只有50多个。
-15万人围观。50人动手。转化率不到万分之三。
-我一开始以为是技术门槛的问题——可能大家不会用GitHub、不用Claude Code。
-后来发现，事情没这么简单。
-一、真正的障碍不是技术，是一种结构性错位 最近一段时间，和团队内外部同事朋友等各类人聊了这个话题——OEM、Tier1的工程师、做AI Agent的创业者、高校老师、咨询公司。聊完之后我得出了一个让自己也挺意外的结论：
-真正需要这些AI工具的人，不会用GitHub。会用GitHub的人，根本不需要这些通用开源工具。
-这不是段子，是一个结构性的错位。展开说说。
-AI-native 公司怎么看这个项目 我紧密协作的团队，几乎每个人都在用Claude、Cursor做日常工作，每个人都在琢磨怎么把自己的活儿用AI自动化。他们对这类通用开源项目的反应是什么？
-不太感兴趣。
-不是因为不好，是因为自己已经在做了——针对自己公司的流程、自己团队的know-how、自己产品的需求，搞定制化的AI工具。一个通用的"功能安全Agent"，远不如他们自己那个塞满了内部案例和模板的版本好使。
-传统车企怎么看这个项目 另一边，有咨询公司的朋友找我聊，说有车企客户想做"AI提效"——同时给底盘域、车身域、智驾域等多个域开发AI Agent，让AI读需求文档、自动提测试用例。
-需求是真实的、强烈的。 但这些一线工程师平时用的是Excel和飞书，不是GitHub和Terminal。你让他Fork一个项目、配置Claude Code、写.claude目录——他做不到，也没时间学。
-图 2 两个案例，一个对比 案例A： 一位咨询机构的朋友接了车企项目，要给多个域同时开发AI Agent。问题是：他对这几个域缺乏深刻的工程经验，只能从企业收集文档做"黑盒"训练——把文档丢进去，让AI硬提取。我的判断：有一些价值，但很难做深。
-案例B： 一位在德国做了20多年座舱研发的创业者，公司本身就做座舱产品，作为Tier1给国内外车企供货。他现在也在做座舱领域的AI Agent。不同的是，他有二十多年的座舱开发经验和现成的产品积累——他知道哪些know-how最值得喂给AI。我的判断：有可能做成。
-差距在哪？ 不是AI能力的差距。同一个Agent 或 Skill，两个人用，输出天差地别。
-差距在注入者的领域深度。
-AI工具的上限 = 注入者的领域深度 × AI的能力。
-图 3 AI的能力大家都一样。决胜的是你往里面灌了什么——你在这个行业踩过的坑、见过的失败模式、积累的判断标准。这些才是AI真正缺的原料。
-最近a16z的一篇文章（Institutional AI vs Individual AI）把类似的现象总结得很到位：
-针对特定任务构建的领域专用方案，相比通用大模型始终保持能力优势——而且这个优势会持续累积。
-翻译成汽车行业的话就是：
-通用AI Agent谁都能生成，但领域know-how注入后的AI才是武器——而且这个武器会越用越锋利。
-二、说来惭愧，我自己也没用过 坦诚地说：我的那个GitHub Fork，加上那篇公众号文章，前前后后花了大概2个小时，就是周日早上用Claude Code高度自动化完成的。
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>1 分钟</span>&nbsp;·&nbsp;<span>101 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 15万围观，50人动手：AI工具落地的错位" href=https://blog.autozyx.com/posts/150k-views-50-hands-on/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？</h2></header><div class=entry-content><p>摘要：2026年3月，德国VDA发布了全球汽车行业首个AI质量管理标准化指南——VDA 20《AI in Quality Management》（191页）。本文深度解读其AIQM三级风险分级、80项检查表和12个应用案例，分析对中国自动驾驶行业的参考价值，并探讨中国在端到端评估方法论和数据基础设施上的领先优势与机会窗口。
-图 1 文末附全文下载链接
-章节导读 一、文档背景——VDA AI in QM 是什么？为什么全球汽车行业需要关注？
-二、核心框架——风险分级、80项检查表、应用案例、AI安全标准全景图
-三、对中国自动驾驶的参考价值——填补AI质量管理空白、变更管理分类
-四、中国落地的额外考量——法规差异、组织文化差异、数据生态差异
-五、挑战与优化——自身局限 + 端到端可解释性、数据漂移、供应链协调
-六、中国的领先优势——AI应用速度领先、端到端评估、数据基础设施
-七、关键启示——对OEM/Tier1、标准制定者、研究者分别的行动建议
-八、一句话总结——谁先给路上跑的AI立规矩，谁就定义下一个十年
-一、文档背景 2026年3月，德国汽车工业协会（VDA）发布了VDA 20——《AI in Quality Management》（以下简称"黄皮书"），这是全球汽车行业首个针对AI质量管理的系统性标准化指南，共191页。
-为什么值得关注？
-德国VDA标准在全球汽车行业的影响力不亚于ISO标准——VDA 6.3（过程审核）、VDA 6.5（产品审核）是几乎所有进入德国市场的汽车供应商的必修课。VDA 20的发布，意味着AI在汽车质量管理中的使用不再是"可选项"，而是开始有了规范化的框架和评估方法。
-图 2 黄皮书章节框架
-二、黄皮书的核心框架 2.1 AIQM三级风险分级——给AI系统"定安全等级" 黄皮书最核心的贡献是提出了AIQM（AI in Quality Management）三级风险分类方法，基于七个风险维度对AI系统进行评估。
-七个风险维度：
-分级结果：
-AIQM-3（最高要求）：七个维度中任一达到"高"即触发→所有评估项必须满足
-AIQM-2（中等要求）：部分评估项适用
-AIQM-1（基础要求）：少量评估项适用
-一个关键洞察：只要AI系统涉及功能安全ASIL C/D或预期功能安全 type 3/4，就自动触发AIQM-3。这意味着，当前所有用于L2+辅助驾驶和L3级及以上自动驾驶的AI组件，其质量管理必须达到最高等级。
-2.2 八阶段评估检查表——约80个"灵魂拷问" 通过AIQM风险分级后，第二步是对AI系统进行详细的技术评估。VDA按照AI系统的开发生命周期，定义了八个阶段：
-应用领域定义 → 数据理解 → 数据收集 → 数据准备 → 建模 → 评估 → 部署 → 运行维护
-...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;·&nbsp;<span>228 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？" href=https://blog.autozyx.com/posts/vda-ai-in-qm-germany-rules/></a></article></main><footer class=footer><span>&copy; 2026 <a href=https://blog.autozyx.com/>AutoZYX Blog</a></span> ·
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>6 分钟</span>&nbsp;·&nbsp;<span>2905 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 博世工程师开源了一个项目，可能改变每个汽车工程师的工作方式" href=https://blog.autozyx.com/posts/bosch-engineer-opensource-project/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>15万围观，50人动手：AI工具落地的错位</h2></header><div class=entry-content><p>摘要：一篇关于博世工程师开源项目的文章收获15万+曝光，但真正Fork动手的只有50多人。这种"围观多、动手少"的现象背后，是AI工具落地的结构性错位——真正需要AI工具的人不会用GitHub，会用GitHub的人不需要通用工具。AI工具的上限取决于注入者的领域深度，而非AI本身的能力。
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>7 分钟</span>&nbsp;·&nbsp;<span>3173 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to 15万围观，50人动手：AI工具落地的错位" href=https://blog.autozyx.com/posts/150k-views-50-hands-on/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？</h2></header><div class=entry-content><p>摘要：2026年3月，德国VDA发布了全球汽车行业首个AI质量管理标准化指南——VDA 20《AI in Quality Management》（191页）。本文深度解读其AIQM三级风险分级、80项检查表和12个应用案例，分析对中国自动驾驶行业的参考价值，并探讨中国在端到端评估方法论和数据基础设施上的领先优势与机会窗口。
+...</p></div><footer class=entry-footer><span title='2026-04-06 00:00:00 +0000 UTC'>2026年4月6日</span>&nbsp;·&nbsp;<span>11 分钟</span>&nbsp;·&nbsp;<span>5248 字</span>&nbsp;·&nbsp;<span>张玉新</span></footer><a class=entry-link aria-label="post link to VDA AI in QM ：德国率先给AI立规矩，对中国自动驾驶行业意味着什么？" href=https://blog.autozyx.com/posts/vda-ai-in-qm-germany-rules/></a></article></main><footer class=footer><span>&copy; 2026 <a href=https://blog.autozyx.com/>AutoZYX Blog</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
 <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
