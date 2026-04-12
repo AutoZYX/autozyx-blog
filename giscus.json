@@ -1,0 +1,4 @@
+{
+  "origins": ["https://blog.autozyx.com"],
+  "originsRegex": ["https://blog\\.autozyx\\.com$"]
+}
